@@ -2,6 +2,7 @@ from django.core.mail import send_mail
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
+from django.views.decorators.http import require_POST
 
 from mySite import settings
 from .models import *
@@ -35,7 +36,8 @@ def post_detail(request, year, month, day, slug):
                              publish__year=year, publish__month=month, publish__day=day, )
     context = {
         'title': 'Blog Post Detail',
-        'post': post
+        'post': post,
+        'form': CommentForm
     }
     return render(request, 'post_detail.html', context)
 
@@ -64,3 +66,16 @@ def post_share(request, slug):
         'form': form
     }
     return render(request, 'post_share.html', context)
+
+
+@require_POST
+def comment_create(request, slug):
+    post = get_object_or_404(Post, slug=slug, status=Post.Status.ACTIVE)
+    form = CommentForm(request.POST)
+    comment = None
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+    return render(request, 'post_comment.html',
+                  {'title': 'Comment creating page', 'form': CommentForm, 'comments': comment})

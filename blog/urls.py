@@ -4,5 +4,6 @@ from .views import *
 urlpatterns = [
     path('', PostList.as_view(), name='index'),
     path('post/<int:year>/<int:month>/<int:day>/<slug:slug>/', post_detail, name='post_detail'),
-    path('share/<slug:slug>/', post_share, name='post_share')
+    path('share/<slug:slug>/', post_share, name='post_share'),
+    path('send_comment/<slug:slug>/', comment_create, name='send_comment')
 ]

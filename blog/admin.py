@@ -12,3 +12,10 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'publish'
     ordering = ['status', 'publish']
+
+
+@admin.register(Comments)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'post', 'active']
+    list_filter = ['post', 'active', 'created']
+    search_fields = ['body', 'user']

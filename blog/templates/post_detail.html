@@ -10,9 +10,11 @@
         <h1 class="post-title">{{ post.title }}</h1>
         <p class="post-date">{{ post.create }}</p>
         <div class="post-content">
-            {{ post.body }}
+            {{ post.body|linebreaks }}
         </div>
     </article>
 </div>
+
+{% include 'post_comment.html' %}
 
 {% endblock main %}

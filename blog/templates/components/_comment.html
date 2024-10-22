@@ -1,0 +1,20 @@
+<div class="comment-form mt-4">
+    <h3>Leave a Comment</h3>
+    <form id="commentForm" action="{% url 'send_comment' post.slug %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="{{ form.user.id_for_label }}" class="form-label">Name</label>
+            <input type="text" class="form-control" id="{{ form.name.id_for_label }}" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+            <input type="text" class="form-control" id="{{ form.email.id_for_label }}" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.body.id_for_label }}" class="form-label">Comment</label>
+            <textarea class="form-control" id="{{ form.body.id_for_label }}" rows="4" placeholder="Write your comment"
+                      required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>

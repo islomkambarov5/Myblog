@@ -43,3 +43,25 @@ class Post(models.Model):
             self.publish.day,
             self.slug
         ])
+
+
+class Comments(models.Model):
+    post = models.ForeignKey(Post,
+                             on_delete=models.CASCADE,
+                             related_name='comments',
+                             verbose_name='post')
+    user = models.CharField(max_length=80, verbose_name='Username')
+    email = models.EmailField(verbose_name='Email')
+    body = models.TextField(verbose_name='Comment')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Created at')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Updated at')
+    active = models.BooleanField(default=True, verbose_name='Active')
+
+    class Meta:
+        ordering = ['-created']
+        indexes = [
+            models.Index(fields=['-created']),
+        ]
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.post}'
