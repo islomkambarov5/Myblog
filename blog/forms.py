@@ -9,9 +9,7 @@ class EmailPostForm(forms.Form):
     comments = forms.CharField(required=False)
 
 
-class CommentForm(forms.Form):
-    def save(self, commit=True):
-        return super(CommentForm, self).save(commit=commit)
+class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ('user', 'email', 'body')

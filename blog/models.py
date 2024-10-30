@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 class PublishedManager(models.Manager):
@@ -10,6 +11,7 @@ class PublishedManager(models.Manager):
 
 
 class Post(models.Model):
+    tags = TaggableManager()
     objects = models.Manager()
     published = PublishedManager()
 
@@ -35,6 +37,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def get_tag_url(self):
+        return [reverse('index_by_tag', args=[tag.slug]) for tag in self.tags.all()]
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[
@@ -64,4 +69,4 @@ class Comments(models.Model):
         ]
 
     def __str__(self):
-        return f'Comment by {self.name} on {self.post}'
+        return f'Comment by {self.user} on {self.post}'

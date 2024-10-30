@@ -14,15 +14,7 @@
 
 <!-- Blog Posts -->
 <div class="container">
-    <div class="search_bar" style="display:contents; margin: 0 auto; width: 50%; max-width: 600px; text-align: center; margin-top: 50px;">
-        <form style="display: block; margin: 0 auto; width: 50%; max-width: 600px; text-align: center;" method="GET" action="{% url 'search' %}">
-            <input style="display: block; margin: 0 auto; width: 80%; max-width: 600px; text-align: center; padding: 10px; border-radius: 5px; border: none;" type="text" name="q" placeholder="Search by title or tag">
-            <button style="display: block; margin: 0 auto; width: 20%; max-width: 100px; text-align: center; padding: 10px; border-radius: 5px; border: none;" type="submit">Search</button>
-        </form>
-    </div>
-    {% if not query %}
     <h2 class="mb-4">Most commented posts</h2>
-    {% most_commented_posts as most_commented_posts %}
     {% for posta in most_commented_posts %}
     <a href="{{ posta.get_absolute_url }}">
         <div class="post-preview">
@@ -34,18 +26,11 @@
             </h5>
         </div>
     </a>
-    {% endfor %}
-    {% endif %}
+{% endfor %}
 
-    {% if not query %}
+
     <h2 class="mb-4">Latest Posts</h2>
     <h3>I have {% total_posts %} posts</h3>
-    <h5>tags:
-    {% for tag in tags %}
-        <a href="{% url 'index_by_tag' tag.slug %}"> {{ tag.name|capfirst }}</a>
-    {% endfor %}
-    </h5>
-    {% endif %}
     {% for post in posts %}
     <a href="{{ post.get_absolute_url }}">
         <div class="post-preview">

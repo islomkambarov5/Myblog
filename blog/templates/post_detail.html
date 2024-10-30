@@ -10,9 +10,33 @@
         <h1 class="post-title">{{ post.title }}</h1>
         <p class="post-date">{{ post.create }}</p>
         <div class="post-content">
-            {{ post.body|linebreaks }}
+            {{ post.body|safe }}
         </div>
     </article>
+</div>
+
+<!-- Post recommendation by tags -->
+<div class="post">
+    <h2>Related Posts</h2>
+    <div class="row">
+        {% for post in similar_posts %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.body|striptags|truncatewords:20 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-outline-dark">View</a>
+                        </div>
+                        <small class="text-muted">{{ post.create }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+        
 </div>
 
 {% include 'post_comment.html' %}
